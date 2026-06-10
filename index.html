@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Happy Birthday My Love ❤️</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Poppins',sans-serif;
+}
+
+body{
+    min-height:100vh;
+    overflow:hidden;
+    background:linear-gradient(135deg,#ff758c,#ff7eb3,#ffb199);
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    text-align:center;
+    position:relative;
+}
+
+/* Main Card */
+.card{
+    width:90%;
+    max-width:450px;
+    background:rgba(255,255,255,0.15);
+    backdrop-filter:blur(12px);
+    border-radius:25px;
+    padding:30px 20px;
+    color:white;
+    box-shadow:0 8px 30px rgba(0,0,0,0.2);
+    animation:fadeIn 1.5s ease;
+    z-index:10;
+}
+
+h1{
+    font-size:2.3rem;
+    margin-bottom:10px;
+    animation:bounce 2s infinite;
+}
+
+h2{
+    font-size:1.2rem;
+    font-weight:400;
+    margin-bottom:20px;
+}
+
+.message{
+    font-size:1rem;
+    line-height:1.7;
+    margin-bottom:20px;
+}
+
+.love{
+    font-size:1.4rem;
+    font-weight:600;
+    color:#fff;
+}
+
+.btn{
+    margin-top:15px;
+    background:white;
+    color:#ff4f81;
+    border:none;
+    padding:12px 24px;
+    border-radius:50px;
+    font-size:1rem;
+    font-weight:600;
+    cursor:pointer;
+    transition:0.3s;
+}
+
+.btn:hover{
+    transform:scale(1.08);
+}
+
+/* Floating Hearts */
+.heart{
+    position:absolute;
+    color:white;
+    font-size:20px;
+    animation:float linear infinite;
+    opacity:0.8;
+}
+
+@keyframes float{
+    from{
+        transform:translateY(100vh);
+        opacity:1;
+    }
+    to{
+        transform:translateY(-120px);
+        opacity:0;
+    }
+}
+
+/* Fade Animation */
+@keyframes fadeIn{
+    from{
+        opacity:0;
+        transform:translateY(40px);
+    }
+    to{
+        opacity:1;
+        transform:translateY(0);
+    }
+}
+
+/* Bounce */
+@keyframes bounce{
+    0%,100%{
+        transform:translateY(0);
+    }
+    50%{
+        transform:translateY(-10px);
+    }
+}
+
+/* Confetti Canvas */
+canvas{
+    position:fixed;
+    top:0;
+    left:0;
+    pointer-events:none;
+}
+
+@media(max-width:480px){
+    h1{
+        font-size:1.8rem;
+    }
+
+    .message{
+        font-size:0.95rem;
+    }
+}
+</style>
+</head>
+<body>
+
+<canvas id="confetti"></canvas>
+
+<div class="card">
+    <h1>🎂 Happy Birthday ❤️</h1>
+
+    <h2>To My Beautiful Girlfriend</h2>
+
+    <p class="message">
+        Happy Birthday, my love! 💕<br><br>
+        You are the most precious part of my life and every moment with you feels magical.
+        Thank you for filling my days with happiness, laughter, and endless love.
+        May your special day be as beautiful and amazing as you are.
+    </p>
+
+    <div class="love">
+        I Love You Forever ❤️
+    </div>
+
+    <button class="btn" onclick="showLove()">
+        Click Me 💖
+    </button>
+</div>
+
+<script>
+// Button Surprise
+function showLove(){
+    alert("Happy Birthday, My Love ❤️🎂\nYou mean the world to me! 💕");
+}
+
+// Floating Hearts
+function createHeart(){
+    const heart = document.createElement("div");
+    heart.classList.add("heart");
+    heart.innerHTML = "❤";
+
+    heart.style.left = Math.random()*100 + "vw";
+    heart.style.animationDuration = (3 + Math.random()*4) + "s";
+    heart.style.fontSize = (15 + Math.random()*25) + "px";
+
+    document.body.appendChild(heart);
+
+    setTimeout(()=>{
+        heart.remove();
+    },7000);
+}
+
+setInterval(createHeart,300);
+
+// Confetti Animation
+const canvas = document.getElementById('confetti');
+const ctx = canvas.getContext('2d');
+
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
+
+const pieces = [];
+
+for(let i=0;i<180;i++){
+    pieces.push({
+        x:Math.random()*canvas.width,
+        y:Math.random()*canvas.height-canvas.height,
+        size:Math.random()*8+4,
+        speed:Math.random()*3+2,
+        color:`hsl(${Math.random()*360},100%,60%)`,
+        rotation:Math.random()*360
+    });
+}
+
+function animateConfetti(){
+    ctx.clearRect(0,0,canvas.width,canvas.height);
+
+    pieces.forEach(p=>{
+        ctx.save();
+        ctx.translate(p.x,p.y);
+        ctx.rotate(p.rotation);
+
+        ctx.fillStyle=p.color;
+        ctx.fillRect(-p.size/2,-p.size/2,p.size,p.size);
+
+        ctx.restore();
+
+        p.y += p.speed;
+        p.rotation += 0.05;
+
+        if(p.y > canvas.height){
+            p.y = -20;
+            p.x = Math.random()*canvas.width;
+        }
+    });
+
+    requestAnimationFrame(animateConfetti);
+}
+
+animateConfetti();
+
+window.addEventListener('resize',()=>{
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+});
+</script>
+
+</body>
+</html>
